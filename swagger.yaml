@@ -1,0 +1,564 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: My Api
+  description: testing
+  
+host: localhost
+basePath: /myapi
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+  
+tags: 
+- name: department
+  description: Everything about department
+  
+- name: Student
+  description: Everything about students
+
+- name: Lecturer
+  description: Everything about Lecturers
+  
+- name: Staff
+  description: Everything about Staff
+
+- name: Course
+  description: Everything about course
+
+paths:
+  /departments:
+    get:
+      tags: 
+      - department
+      summary: Find departments
+      description: return departments
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters: []
+      responses:
+        200:
+          description:  return departments
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Departments'
+    
+              
+  /students:
+    get:
+      tags: 
+      - Student
+      summary: Find All Students
+      description: return students
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters: []
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Students'
+    
+    post:
+      tags: 
+      - Student
+      summary: Add a new Student
+      description: new student
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/Students'
+      responses:   
+        200:
+          description: OK    
+          schema:
+            $ref: '#/definitions/Students'
+        405:
+          description: Invalid input 
+  
+  /studentss/get_names:
+    get:
+      tags: 
+      - Student
+      summary: List Students names
+      description: find names
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters: []
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              lecturer_name1:
+                type: string
+                example: "Jimith"
+              lecturer_name2:
+                type: string
+                example: "Dilshan" 
+          
+        
+  
+  /students/{student_id}:
+    get:
+      tags: 
+      - Student
+      summary: Find a Student by ID
+      description: find student by id
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: student_id
+        in: path
+        description: ID of student to return
+        required: true
+        type: integer
+        format: int64
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Students'
+        404:
+          description: Student not found
+          
+    put:
+      tags:
+      - Student
+      summary: Updated Student
+      description: Using Student Id update student details
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: student_id
+        in: path
+        description: id that need to update student
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: Updated student object
+        required: true
+        schema:
+          $ref: '#/definitions/Students'
+      responses:
+        400:
+          description: Invalid data
+        404:
+          description: student Not found
+          
+    delete:
+      tags:
+      - Student
+      summary: Remove Student
+      description:  Remove Students by id
+      parameters:
+      - name: student_id
+        in: path
+        description: ID of student to delete
+        required: true
+        type: integer
+        format: int64
+      responses:
+        200:
+          description: Deleted Successfully
+        404:
+          description: Student not found
+        
+          
+  /lecturers:
+    get:
+      tags: 
+      - Lecturer
+      summary: Find All Lecturers
+      description: return lecturers
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Lecturer'
+              
+    post:
+      tags: 
+      - Lecturer
+      summary: Add a new Lecturer
+      description: new Lecturer
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/Lecturer'
+      responses:   
+        200:
+          description: OK    
+          schema:
+            $ref: '#/definitions/Lecturer'
+        405:
+          description: Invalid input
+  
+  /lecturers/get_names:
+    get:
+      tags: 
+      - Lecturer
+      summary: List Lecturers names
+      description: find names
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters: []
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              lecturer_name1:
+                type: string
+                example: "Dr.Rasika"
+              lecturer_name2:
+                type: string
+                example: "Mr.Prabhath"  
+                
+          
+        
+  
+  /lecturers/{lecturer_id}:
+    get:
+      tags: 
+      - Lecturer
+      summary: Find a Lecturer by ID
+      description: find Lecturer by id
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: lecturer_id
+        in: path
+        description: ID of Lecturer to return
+        required: true
+        type: integer
+        format: int64
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Lecturer'
+        
+        404:
+          description: Lecturer not found      
+    
+    delete:
+      tags:
+      - Lecturer
+      summary: Remove Lecturer
+      description:  Remove Lecturer by id
+      parameters:
+      - name: lecturer_id
+        in: path
+        description: ID of Lecturer to delete
+        required: true
+        type: integer
+        format: int64
+      responses:
+        200:
+          description: Deleted Successfully
+        404:
+          description: Lecturer not found        
+              
+              
+              
+              
+  /staff:
+    get:
+      tags: 
+      - Staff
+      summary: Find All Staff
+      description: return staff
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Staff'
+      
+    post:
+      tags: 
+      - Staff
+      summary: Add a new Staff
+      description: new Staff
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/Staff'
+      responses:   
+        200:
+          description: OK    
+          schema:
+            $ref: '#/definitions/Staff'
+        405:
+          description: Invalid input  
+          
+  /staff/get_names:
+    get:
+      tags: 
+      - Staff
+      summary: List Staff names
+      description: find names
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters: []
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              lecturer_name1:
+                type: string
+                example: "Mr.Sunil"
+              lecturer_name2:
+                type: string
+                example: "Mr.Jayan"
+              
+  /staff/{staff_id}:
+    get:
+      tags: 
+      - Staff
+      summary: Find a Staff by ID
+      description: find Staff by id
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: staff_id
+        in: path
+        description: ID of Lecturer to return
+        required: true
+        type: integer
+        format: int64
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Staff'
+        
+        404:
+          description: Pet not found   
+          
+    delete:
+      tags:
+      - Staff
+      summary: Remove Staff
+      description:  Remove Staff by id
+      parameters:
+      - name: staff_id
+        in: path
+        description: ID of Staff to delete
+        required: true
+        type: integer
+        format: int64
+      responses:
+        200:
+          description: Deleted Successfully
+        
+        404:
+          description: Student not found       
+              
+  /course:
+    get:
+      tags: 
+      - Course
+      summary: Find Courses
+      description: return course
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Course'
+  
+                
+                
+    
+  
+  
+  
+definitions:
+
+  Departments:
+    type: object
+    properties:
+      department_name:
+        type: string
+        example: SOB
+      department_id:
+        type: string
+        example: L01
+    xml:
+      name: Department    
+  
+  Students:
+    type: object
+    required: 
+    - student_id
+    - student_name
+    properties:
+      student_name:
+        type: string
+        example: Gihan
+      student_id:
+        type: integer
+        format: int64
+      student_address:
+        type: string
+        example: No.250,xxxx ,xxxx, xxxx
+      student_mobile:
+        type: integer
+        format: int64
+      age:
+        type: integer
+        format: int64
+      department:
+        $ref: '#/definitions/Departments'
+      course:
+        $ref: '#/definitions/Course'
+    xml:
+      name: Student    
+        
+  Lecturer:
+    type: object
+    properties:
+      lecturer_name:
+        type: string
+        example: Dr.Smith
+      lecturer_id:
+        type: integer
+        format: int64
+      lecturer_address:
+        type: string
+        example: No.250,xxxx ,xxxx, xxxx
+      lecturer_mobile:
+        type: integer
+        format: int64
+      lecturer_department:
+        $ref: '#/definitions/Departments'
+    xml:
+      name: Lecturer    
+      
+  
+  Course:
+    type: object
+    properties:
+      course_name:
+        type: string
+        example: Software engineering
+    xml:
+      name: Course    
+        
+  Staff:
+    type: object
+    properties:
+      saff_name:
+        type: string
+        example: Piyal
+      staff_id:
+        type: integer
+        example: 0001
+      staff_address:
+        type: string
+        example: No.250,xxxx ,xxxx, xxxx
+      staff_mobile:
+        type: string
+        example: 0716626333
+      department:
+        $ref: '#/definitions/Departments'
+    xml:
+      name: Staff    
+        
+      
+      
